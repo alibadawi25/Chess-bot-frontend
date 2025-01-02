@@ -44,7 +44,7 @@ export default function App() {
   useEffect(() => {
     // Fetch the board state from the Flask backend
     axios
-      .get("http://localhost:5000/get_board_state")
+      .get("http://192.168.1.9:5000/get_board_state")
       .then((response) => {
         setBoardState(response.data.board_state);
       })
@@ -121,7 +121,7 @@ export default function App() {
 
       // Send the player's move to the backend
       axios
-        .post("http://localhost:5000/make_move", { move })
+        .post("http://192.168.1.9:5000/make_move", { move })
         .then((response) => {
           if (response.data.success) {
             setBoardState(response.data.board_state);
@@ -178,7 +178,7 @@ export default function App() {
   const playAI = () => {
     // Send a request to the backend to get the AI's move
     axios
-      .get("http://localhost:5000/get_ai_move")
+      .get("http://192.168.1.9:5000/get_ai_move")
       .then((response) => {
         if (response.data.success) {
           setBoardState(response.data.board_state);
@@ -194,7 +194,7 @@ export default function App() {
 
               // Reset the board
               axios
-                .post("http://localhost:5000/reset_board")
+                .post("http://192.168.1.9:5000/reset_board")
                 .then((resetResponse) => {
                   if (resetResponse.data.success) {
                     console.log(resetResponse.data.message);
@@ -227,7 +227,7 @@ export default function App() {
 
   const getLegalMoves = (square) => {
     axios
-      .post("http://localhost:5000/get_legal_moves", { square })
+      .post("http://192.168.1.9:5000/get_legal_moves", { square })
       .then((response) => {
         const legalMoves = response.data.legal_moves || [];
         console.log("Legal moves:", legalMoves);
@@ -267,7 +267,7 @@ export default function App() {
     setHighlightedSquares([]);
     const move = `${pawnToPromote.col}${pawnToPromote.row}${pawnToPromote.to_col}${pawnToPromote.to_row}${promotedPieceType}`;
     axios
-      .post("http://localhost:5000/make_move", { move })
+      .post("http://192.168.1.9:5000/make_move", { move })
       .then((response) => {
         if (response.data.success) {
           setBoardState(response.data.board_state);
